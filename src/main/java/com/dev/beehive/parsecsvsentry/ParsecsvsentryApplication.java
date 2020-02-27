@@ -2,15 +2,14 @@ package com.dev.beehive.parsecsvsentry;
 
 import com.dev.beehive.parsecsvsentry.domain.InputMc;
 import com.dev.beehive.parsecsvsentry.domain.PgmMap;
-import com.dev.beehive.parsecsvsentry.domain.SentryConfig;
-import com.dev.beehive.parsecsvsentry.utils.LineFilter;
+import com.dev.beehive.parsecsvsentry.utils.InputMcLineFilter;
+import com.dev.beehive.parsecsvsentry.utils.PgmMapLineFilter;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 import com.opencsv.bean.CsvToBeanFilter;
 import com.opencsv.bean.HeaderColumnNameMappingStrategy;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
 import java.util.List;
@@ -37,19 +36,19 @@ public class ParsecsvsentryApplication {
             HeaderColumnNameMappingStrategy<InputMc> inputMcStrategy
                     = new HeaderColumnNameMappingStrategy<>();
             inputMcStrategy.setType(InputMc.class);
-            CsvToBeanFilter filter = new LineFilter((inputMcStrategy));
+            CsvToBeanFilter inputMcLineFilter = new InputMcLineFilter((inputMcStrategy));
 
             HeaderColumnNameMappingStrategy<PgmMap> pgmMapStrategy
                     = new HeaderColumnNameMappingStrategy<>();
             pgmMapStrategy.setType(PgmMap.class);
-            CsvToBeanFilter pgmMapFilter = new LineFilter((pgmMapStrategy));
+            CsvToBeanFilter pgmMapFilter = new PgmMapLineFilter((pgmMapStrategy));
 
 
             CsvToBean<InputMc> csvToInputMcBean= new CsvToBeanBuilder(reader1)
                     .withType(InputMc.class)
                     .withMappingStrategy(inputMcStrategy)
                     .withIgnoreLeadingWhiteSpace(true)
-                    .withFilter(filter)
+                    .withFilter(inputMcLineFilter)
                     .build();
 
             CsvToBean<PgmMap> csvToPgmMapBean = new CsvToBeanBuilder(reader1)
@@ -58,8 +57,6 @@ public class ParsecsvsentryApplication {
                     .withIgnoreLeadingWhiteSpace(true)
                     .withFilter(pgmMapFilter)
                     .build();
-
-
 
             //List<SentryConfig> configList = csvToBean.parse();
             List<InputMc> inputMcConfigList = csvToInputMcBean.parse();
