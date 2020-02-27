@@ -4,103 +4,67 @@ import com.opencsv.bean.CsvBindByName;
 
 public class SentryConfig {
 
-    @CsvBindByName(column = "#type*")
-    private String type;
+    private String site;
+    private String path;
+    private String file_name;
+    private String symbol;
+    private String ip_address;
+    private String settings;
+    private String description;
 
-    @CsvBindByName(column = "#port_name*")
-    private  String port_name;
-
-    @CsvBindByName(column = "#port_number*")
-    private String port_number;
-
-    @CsvBindByName(column = "#port_desc")
-    private String port_desc;
-
-    @CsvBindByName(column = "#mc_source_addr")
-    private String mc_source_addr;
-
-    @CsvBindByName(column = "#mc_group")
-    private String mc_group;
-
-    @CsvBindByName(column = "#mc_udp_port")
-    private String mc_udp_port;
-
-    @CsvBindByName(column = "#config_id*")
-    private String config_id;
-
-    @CsvBindByName(column = "#enabled")
-    private String enabled;
-
-    public String getType() {
-        return type;
+    public String getSite() {
+        return site;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setSite(String site) {
+        this.site = site;
     }
 
-    public String getPort_name() {
-        return port_name;
+    public String getPath() {
+        return path;
     }
 
-    public void setPort_name(String port_name) {
-        this.port_name = port_name;
+    public void setPath(String path) {
+        this.path = path;
     }
 
-    public String getPort_number() {
-        return port_number;
+    public String getFile_name() {
+        return file_name;
     }
 
-    public void setPort_number(String port_number) {
-        this.port_number = port_number;
+    public void setFile_name(String file_name) {
+        this.file_name = file_name;
     }
 
-    public String getPort_desc() {
-        return port_desc;
+    public String getSymbol() {
+        return symbol;
     }
 
-    public void setPort_desc(String port_desc) {
-        this.port_desc = port_desc;
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
     }
 
-    public String getMc_source_addr() {
-        return mc_source_addr;
+    public String getIp_address() {
+        return ip_address;
     }
 
-    public void setMc_source_addr(String mc_source_addr) {
-        this.mc_source_addr = mc_source_addr;
+    public void setIp_address(String ip_address) {
+        this.ip_address = ip_address;
     }
 
-    public String getMc_group() {
-        return mc_group;
+    public String getSettings() {
+        return settings;
     }
 
-    public void setMc_group(String mc_group) {
-        this.mc_group = mc_group;
+    public void setSettings(String settings) {
+        this.settings = settings;
     }
 
-    public String getMc_udp_port() {
-        return mc_udp_port;
+    public String getDescription() {
+        return description;
     }
 
-    public void setMc_udp_port(String mc_udp_port) {
-        this.mc_udp_port = mc_udp_port;
+    public void setDescription(String description) {
+        this.description = description;
     }
-
-    public String getConfig_id() {
-        return config_id;
-    }
-
-    public void setConfig_id(String config_id) {
-        this.config_id = config_id;
-    }
-
-    public String getEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(String enabled) {
-        this.enabled = enabled;
-    }
-
 }

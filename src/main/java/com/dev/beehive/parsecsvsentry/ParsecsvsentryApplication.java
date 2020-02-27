@@ -1,5 +1,7 @@
 package com.dev.beehive.parsecsvsentry;
 
+import com.dev.beehive.parsecsvsentry.domain.InputMc;
+import com.dev.beehive.parsecsvsentry.domain.PgmMap;
 import com.dev.beehive.parsecsvsentry.domain.SentryConfig;
 import com.dev.beehive.parsecsvsentry.utils.LineFilter;
 import com.opencsv.bean.CsvToBean;
@@ -24,36 +26,47 @@ public class ParsecsvsentryApplication {
 
         //parse CSV File to create a list of sentry configuration objects
         try {
-            //FileInputStream fileInputStream = new FileInputStream("test.csv");
-            //BufferedReader reader = new BufferedReader(new InputStreamReader(fileInputStream));
-
             // initializing FileInputStream
-            FileInputStream fileInputStream = new FileInputStream("test.csv");
+            //FileInputStream fileInputStream = new FileInputStream("test.csv");
+            FileInputStream fileInputStream = new FileInputStream("10_35_34_212.csv");
 
             // Initializing InputStreamReader object
             InputStreamReader reader = new InputStreamReader(fileInputStream);
             Reader reader1 = new BufferedReader(reader);
 
-            /* String line;
-            while((line = reader.read()) != null) {
-                System.out.println(line);
-            } */
-
-            HeaderColumnNameMappingStrategy<SentryConfig> strategy
+            HeaderColumnNameMappingStrategy<InputMc> inputMcStrategy
                     = new HeaderColumnNameMappingStrategy<>();
-            strategy.setType(SentryConfig.class);
-            CsvToBeanFilter filter = new LineFilter(strategy);
+            inputMcStrategy.setType(InputMc.class);
+            CsvToBeanFilter filter = new LineFilter((inputMcStrategy));
 
-            CsvToBean<SentryConfig> csvToBean= new CsvToBeanBuilder(reader1)
-                    .withType(SentryConfig.class)
-                    .withMappingStrategy(strategy)
+            HeaderColumnNameMappingStrategy<PgmMap> pgmMapStrategy
+                    = new HeaderColumnNameMappingStrategy<>();
+            pgmMapStrategy.setType(PgmMap.class);
+            CsvToBeanFilter pgmMapFilter = new LineFilter((pgmMapStrategy));
+
+
+            CsvToBean<InputMc> csvToInputMcBean= new CsvToBeanBuilder(reader1)
+                    .withType(InputMc.class)
+                    .withMappingStrategy(inputMcStrategy)
                     .withIgnoreLeadingWhiteSpace(true)
                     .withFilter(filter)
                     .build();
 
+            CsvToBean<PgmMap> csvToPgmMapBean = new CsvToBeanBuilder(reader1)
+                    .withType(PgmMap.class)
+                    .withMappingStrategy(pgmMapStrategy)
+                    .withIgnoreLeadingWhiteSpace(true)
+                    .withFilter(pgmMapFilter)
+                    .build();
 
-            List<SentryConfig> configList = csvToBean.parse();
-            System.out.println("File Finished Parsing..." + configList);
+
+
+            //List<SentryConfig> configList = csvToBean.parse();
+            List<InputMc> inputMcConfigList = csvToInputMcBean.parse();
+            System.out.println("Parsing InputMc Records Complete.  Total Records Parsed: " + inputMcConfigList.size());
+
+            List<PgmMap> pgmMapConfigList = csvToPgmMapBean.parse();
+            System.out.println("Parsing PgmMap Records Complete.  Total Records Parsed: " + pgmMapConfigList.size());
 
         }catch (Exception e) {
             e.printStackTrace();
